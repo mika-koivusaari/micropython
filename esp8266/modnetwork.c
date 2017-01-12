@@ -427,6 +427,18 @@ unknown:
 }
 STATIC MP_DEFINE_CONST_FUN_OBJ_KW(esp_config_obj, 1, esp_config);
 
+/// \method rssi()
+/// Return RSSI from currently connected AP.
+///     31: Failure, invalid value.
+///     other : Success, value of RSSI, in general, RSSI value < 10
+STATIC mp_obj_t esp_rssi(mp_obj_t self_in) {
+    mp_obj_t val;
+    val = MP_OBJ_NEW_SMALL_INT(wifi_station_get_rssi());
+    return val;
+}
+
+STATIC MP_DEFINE_CONST_FUN_OBJ_1(esp_rssi_obj, esp_rssi);
+
 STATIC const mp_map_elem_t wlan_if_locals_dict_table[] = {
     { MP_OBJ_NEW_QSTR(MP_QSTR_active), (mp_obj_t)&esp_active_obj },
     { MP_OBJ_NEW_QSTR(MP_QSTR_connect), (mp_obj_t)&esp_connect_obj },
@@ -436,6 +448,7 @@ STATIC const mp_map_elem_t wlan_if_locals_dict_table[] = {
     { MP_OBJ_NEW_QSTR(MP_QSTR_isconnected), (mp_obj_t)&esp_isconnected_obj },
     { MP_OBJ_NEW_QSTR(MP_QSTR_config), (mp_obj_t)&esp_config_obj },
     { MP_OBJ_NEW_QSTR(MP_QSTR_ifconfig), (mp_obj_t)&esp_ifconfig_obj },
+    { MP_OBJ_NEW_QSTR(MP_QSTR_rssi), (mp_obj_t)&esp_rssi_obj },
 };
 
 STATIC MP_DEFINE_CONST_DICT(wlan_if_locals_dict, wlan_if_locals_dict_table);
